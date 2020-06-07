@@ -1,0 +1,6 @@
+.numeroporextenso
+*.sqlite3
+.env
+*.pyc
+__cache__
+staticfiles
