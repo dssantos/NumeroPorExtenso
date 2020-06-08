@@ -1,1 +1,23 @@
-<html><p>Index of <b>numeroporextenso</b></p></html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Número por Extenso</title>
+</head>
+<body>
+    <div id="topo">
+        <h1>Conversor de Número por Extenso</h1>
+    </div>
+    <div id="conversor">
+        <form action="/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Converter">
+        </form>
+    </div>
+    <div id="resultado">
+        <p>{{ extenso | capfirst }}</p>
+    </div>
+</body>
+</html>
