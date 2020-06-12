@@ -16,8 +16,13 @@
             <input type="submit" value="Converter">
         </form>
     </div>
-    <div id="results">
-        <p>{{ converted | capfirst }}</p>
+    <div id="converted">
+        {% if ordinal or currency %}
+            <h3>Cardinal</h3>
+            <p>{{ cardinal | capfirst }}</p>
+            <h3>Monetário</h3>
+            <p>{{ currency | capfirst }}</p>
+        {% endif %}
     </div>
 </body>
 </html>

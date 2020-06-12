@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from .forms import ConverterForm
-from .views import converter
+from .views import convert
 
 
 class HomeTest(TestCase):
@@ -63,24 +63,43 @@ class ConvertInvalidValueTest(TestCase):
 
 class ConvertSucessTest(TestCase):
 
-    def test_convert_integrer(self):
+    def test_integrer_convert(self):
         """Must show converted integrer on html page"""
         data = dict(number=1234,)
         self.response = self.client.post('/', data)
         self.assertContains(self.response, 'Mil, duzentos e trinta e quatro')
 
-    def test_convert_decimal(self):
+    def test_decimal_convert(self):
         """Must show converted decimal on html page"""
         data = dict(number=1234.56,)
         self.response = self.client.post('/', data)
         self.assertContains(self.response, 'Mil, duzentos e trinta e quatro vírgula cinco seis')
 
+    def test_integrer_currency_convert(self):
+        """Must show currency converted integrer on html page"""
+        data = dict(number=1234,)
+        self.response = self.client.post('/', data)
+        self.assertContains(self.response, 'Mil, duzentos e trinta e quatro reais')
+
+    def test_decimal_currency_convert(self):
+        """Must show currency converted decimal on html page"""
+        data = dict(number=1234.56,)
+        self.response = self.client.post('/', data)
+        self.assertContains(self.response, 'Mil, duzentos e trinta e quatro reais e cinquenta e seis centavos')
+
 
 class ConverterTest(TestCase):
 
-    def test_converter(self):
-        """Must return expected converted value"""
-        self.assertEqual(converter(1234), 'mil, duzentos e trinta e quatro')
-        self.assertEqual(converter(1234.56), 'mil, duzentos e trinta e quatro vírgula cinco seis')
-        self.assertEqual(converter(1234567890), 'um bilhão, duzentos e trinta e quatro milhões, quinhentos e sessenta e sete mil, oitocentos e noventa')
-        self.assertEqual(converter(999999999999999999), '''novecentos e noventa e nove quatrilhões, novecentos e noventa e nove trilhões e novecentos e noventa e nove bilhões, novecentos e noventa e nove milhões, novecentos e noventa e nove mil, novecentos e noventa e nove''')
+    def test_cardinal_convert(self):
+        """Must return expected cardinal converted value"""
+        self.assertEqual(convert(1234), 'mil, duzentos e trinta e quatro')
+        self.assertEqual(convert(1234.56), 'mil, duzentos e trinta e quatro vírgula cinco seis')
+        self.assertEqual(convert(1234567890), 'um bilhão, duzentos e trinta e quatro milhões, quinhentos e sessenta e sete mil, oitocentos e noventa')
+        self.assertEqual(convert(999999999999999999), '''novecentos e noventa e nove quatrilhões, novecentos e noventa e nove trilhões e novecentos e noventa e nove bilhões, novecentos e noventa e nove milhões, novecentos e noventa e nove mil, novecentos e noventa e nove''')
+
+    def test_currency_convert(self):
+        """Must return expected currency converted value"""
+        self.assertEqual(convert(1.1, 'currency'), 'um real e dez centavos')
+        self.assertEqual(convert(1234, 'currency'), 'mil, duzentos e trinta e quatro reais')
+        self.assertEqual(convert(1234.56, 'currency'), 'mil, duzentos e trinta e quatro reais e cinquenta e seis centavos')
+        self.assertEqual(convert(1234567890, 'currency'), 'um bilhão, duzentos e trinta e quatro milhões, quinhentos e sessenta e sete mil, oitocentos e noventa reais')
