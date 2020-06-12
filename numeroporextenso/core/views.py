@@ -1,21 +1,21 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from .forms import ConversorForm
+from .forms import ConverterForm
 from num2words import num2words
 
 def home(request):    
     if request.method == 'POST':        
-        form = ConversorForm(request.POST)
+        form = ConverterForm(request.POST)
         
         if form.is_valid():
-            numero = form.cleaned_data['numero']
-            print(numero)
-            return render(request, 'index.html', {'form': form, 'extenso': conversor(numero)})
+            number = form.cleaned_data['number']
+            context = {'form': form, 'converted': converter(number)}
+            return render(request, 'index.html', context)
 
     else:
-        form = ConversorForm()
-    return render(request, 'index.html', {'form': form, 'extenso': ''})
+        form = ConverterForm()
+    return render(request, 'index.html', {'form': form})
 
-def conversor(numero):
-    return num2words(numero, lang='pt_BR')
+def converter(number):
+    return num2words(number, lang='pt_BR')

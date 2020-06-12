@@ -6,18 +6,18 @@
     <title>Número por Extenso</title>
 </head>
 <body>
-    <div id="topo">
+    <div id="top">
         <h1>Conversor de Número por Extenso</h1>
     </div>
-    <div id="conversor">
+    <div id="convert-form">
         <form action="/" method="post">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Converter">
         </form>
     </div>
-    <div id="resultado">
-        <p>{{ extenso | capfirst }}</p>
+    <div id="results">
+        <p>{{ converted | capfirst }}</p>
     </div>
 </body>
 </html>

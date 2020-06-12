@@ -1,10 +1,11 @@
-## How to Dev
+## To Dev
 
 1. Clone repo
 2. Create a virtualenv
 3. Active virtualenv
 4. Install dependences
 5. Copy and edit your .env file
+6. Run tests
 
 ```console
 git clone https://github.com/dssantos/NumeroPorExtenso.git numeroporextenso
@@ -14,4 +15,5 @@ source .numeroporextenso/bin/activate
 pip install -r requirements-dev.txt
 cp contrib/env-sample .env
 cat .env
+python manage.py test
 ```
